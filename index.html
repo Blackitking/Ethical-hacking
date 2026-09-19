@@ -38,23 +38,25 @@ button{background:#18c78a;color:#04130d;border:0;border-radius:12px;padding:12px
 <section class="box">
 <h2 id="lessonTitle">وانەیەک هەڵبژێرە</h2>
 <p id="lessonText">لەسەر یەکێک لە وانەکان کرتە بکە.</p>
-<button class="secondary" onclick="readKurdish()">🔊 گوێگرتن بە کوردی</button>
+<button class="secondary" onclick="playLesson()">🔊 گوێگرتن بە کوردیی AI</button>
 <button class="secondary" onclick="stopVoice()">⏹️ وەستاندن</button>
 <div id="voiceStatus"></div>
 </section>
 
 <section class="box">
-<h2>🎥 ڤیدیۆی فێرکاری</h2>
-<p>ئەم ڤیدیۆیە لە ناو سایتەکەدا Embed کراوە.</p>
+<h2>🎥 ڤیدیۆ + دەنگی کوردیی AI</h2>
+<p>ڤیدیۆکە لە YouTube ـە. دەنگی YouTube لێرەدا بێدەنگ دەکرێت و دەنگی کوردیی AI ـی تایبەت بە وانەکە لە فایلێکی جیاواز پەخش دەکرێت.</p>
 <div class="video">
 <iframe id="videoFrame"
-src="https://www.youtube.com/embed/2tY6NXj4gyU?rel=0"
-title="Cybersecurity course"
+src="https://www.youtube.com/embed/ZxIUjlwj7mg?rel=0&mute=1&playsinline=1"
+title="Cybersecurity Threats Kurdish"
 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 allowfullscreen></iframe>
 </div>
-<p class="tag">Cybersecurity</p><p class="tag">Ethical Hacking</p>
-<p>تێبینی: دەقی وانەکان کوردییە. بۆ دەنگ، ئەگەر لە مۆبایلەکەت دەنگی Sorani نەبێت، براوزەر دەنگی بەردەستی سیستەم بەکاردهێنێت تا وانەکە بێدەنگ نەبێت.</p>
+<audio id="lessonAudio" controls preload="none" style="width:100%;margin-top:14px"></audio>
+<p id="mediaStatus" class="tag">🎙️ دەنگی کوردیی AI: فایلەکە پاشکەوت بکە لە audio/</p>
+<p class="tag">YouTube</p><p class="tag">Sorani AI Voice</p>
+<p>تێبینی: بۆ پاراستنی مافی ڤیدیۆ، دەنگی ڕەسەنی ڤیدیۆی YouTube کۆپی ناکرێت. دەنگی کوردیی AI بە شێوەی جیاواز لەگەڵ ڤیدیۆکە پەخش دەکرێت.</p>
 </section>
 
 <section class="box">
@@ -118,129 +120,37 @@ sudo apt upgrade</code></pre>
 
 <script>
 const lessons=[
-["1️⃣","Cybersecurity چییە؟","Cybersecurity واتە پاراستنی کۆمپیوتەر، مۆبایل، تۆڕ و زانیاری لە دەستگەیشتنی نەخوازراو. یەکەم هەنگاو ناسینی هەڕەشەکان و بەکارهێنانی وشەی نهێنی بەهێز و نوێکردنەوەی سیستەمەکانە."],
-["2️⃣","Ethical Hacking","Ethical Hacking واتە تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەتی خاوەنەکە. ئامانج دۆزینەوەی کێشەی ئاسایشی و چاککردنیانە، نەک زیانگەیاندن."],
-["3️⃣","Network Security","Network Security بریتییە لە پاراستنی تۆڕ لە دەستگەیشتنی نەخوازراو. Firewall، Encryption و ڕێکخستنی دەستگەیشتن لە بنەما گرنگەکانن."],
-["4️⃣","Phishing","Phishing جۆرێکە لە فێڵکردن بۆ وەرگرتنی زانیاریی نهێنی. پێش کردنەوەی لینک یان دانانی زانیاری، سەرچاوە و ناونیشانی سایت بە وردی بپشکنە."],
-["5️⃣","Password Security","وشەی نهێنی نابێت ئاسان بێت و باشە بۆ هەر ئەکاونتێک وشەی جیاواز بەکاربهێنیت. دوو هەنگاوی پشتڕاستکردنەوەش پاراستن زیاد دەکات."],
-["6️⃣","Web Security","Web Security بریتییە لە پاراستنی وێبسایت و Web Application. هەڵەکانی وەک XSS و SQL Injection لە ژینگەی تاقیکردنەوەی ڕێپێدراو فێربە بۆ چاککردنەوەی پاراستن."]
+{id:"cybersecurity",icon:"1️⃣",title:"Cybersecurity چییە؟",text:"Cybersecurity واتە پاراستنی کۆمپیوتەر، مۆبایل، تۆڕ و زانیاری لە دەستگەیشتنی نەخوازراو. یەکەم هەنگاو ناسینی هەڕەشەکان و پاراستنی زانیارییەکانە.",video:"ZxIUjlwj7mg",audio:"audio/cybersecurity.wav"},
+{id:"ethical",icon:"2️⃣",title:"Ethical Hacking",text:"Ethical Hacking واتە تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەتی خاوەنەکە. ئامانج دۆزینەوەی کێشەی ئاسایشی و چاککردنیانە، نەک زیانگەیاندن.",video:"ZxIUjlwj7mg",audio:"audio/ethical-hacking.wav"},
+{id:"network",icon:"3️⃣",title:"Network Security",text:"Network Security بریتییە لە پاراستنی تۆڕ لە دەستگەیشتنی نەخوازراو. Firewall و Encryption و ڕێکخستنی دەستگەیشتن لە بنەما گرنگەکانن.",video:"ZxIUjlwj7mg",audio:"audio/network-security.wav"},
+{id:"phishing",icon:"4️⃣",title:"Phishing",text:"Phishing جۆرێکە لە فێڵکردن بۆ وەرگرتنی زانیاریی نهێنی. پێش کردنەوەی لینک یان دانانی زانیاری، سەرچاوە و ناونیشانی سایت بە وردی بپشکنە.",video:"ZxIUjlwj7mg",audio:"audio/phishing.wav"},
+{id:"password",icon:"5️⃣",title:"Password Security",text:"وشەی نهێنی نابێت ئاسان بێت و باشە بۆ هەر ئەکاونتێک وشەی جیاواز بەکاربهێنیت. دوو هەنگاوی پشتڕاستکردنەوەش پاراستن زیاد دەکات.",video:"ZxIUjlwj7mg",audio:"audio/password-security.wav"},
+{id:"web",icon:"6️⃣",title:"Web Security",text:"Web Security بریتییە لە پاراستنی وێبسایت و Web Application. هەڵەکانی وەک XSS و SQL Injection لە ژینگەی تاقیکردنەوەی ڕێپێدراو فێربە بۆ چاککردنەوەی پاراستن.",video:"ZxIUjlwj7mg",audio:"audio/web-security.wav"}
 ];
-
-let current="";
-let voices=[];
-let speaking=false;
-
+let current=null;
 const grid=document.getElementById("lessonGrid");
 lessons.forEach((x,i)=>{
- const d=document.createElement("div");
- d.className="card";
- d.innerHTML=`<h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p>
- <button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە 🔊</button>`;
+ const d=document.createElement("div"); d.className="card";
+ d.innerHTML=`<h3>${x.icon} ${x.title}</h3><p>${x.text}</p><button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە 🔊</button>`;
  grid.appendChild(d);
 });
-
-function start(){
- document.getElementById("course").style.display="block";
- document.getElementById("course").scrollIntoView({behavior:"smooth"});
- selectLesson(0);
-}
-
+function start(){document.getElementById("course").style.display="block";document.getElementById("course").scrollIntoView({behavior:"smooth"});selectLesson(0);}
 function selectLesson(i){
- current=lessons[i][2];
- document.getElementById("lessonTitle").textContent=lessons[i][1];
- document.getElementById("lessonText").textContent=current;
+ current=lessons[i];
+ document.getElementById("lessonTitle").textContent=current.title;
+ document.getElementById("lessonText").textContent=current.text;
+ document.getElementById("videoFrame").src=`https://www.youtube.com/embed/${current.video}?rel=0&mute=1&playsinline=1`;
+ const audio=document.getElementById("lessonAudio");
+ audio.pause(); audio.currentTime=0; audio.src=current.audio; audio.load();
  document.getElementById("voiceStatus").textContent="";
- readKurdish();
+ document.getElementById("mediaStatus").textContent=`🎙️ دەنگی کوردیی AI: ${current.audio}`;
 }
-
-function loadVoices(){
- if("speechSynthesis" in window) voices=speechSynthesis.getVoices() || [];
-}
-loadVoices();
-if("speechSynthesis" in window) speechSynthesis.onvoiceschanged=loadVoices;
-
-function chooseVoice(){
- loadVoices();
-
- // First try an actual Kurdish/Sorani voice.
- let v=voices.find(x=>/^ku(-|_)/i.test(x.lang));
- if(v) return v;
- v=voices.find(x=>/kurd|soran/i.test((x.name||"")+" "+(x.lang||"")));
- if(v) return v;
-
- // Android/Chrome often has no Sorani voice. Use an Arabic voice
- // so the Kurdish Arabic-script text is at least spoken instead of failing.
- v=voices.find(x=>/^ar(-|_)/i.test(x.lang));
- if(v) return v;
- return voices.find(x=>/arabic|العربية|عربي/i.test(x.name||"")) || voices[0] || null;
-}
-
-function splitText(text,max=180){
- const words=text.split(/\s+/);
- const out=[]; let part="";
- for(const word of words){
-   if((part+" "+word).trim().length>max){
-     if(part) out.push(part.trim());
-     part=word;
-   }else{
-     part=(part+" "+word).trim();
-   }
- }
- if(part) out.push(part.trim());
- return out;
-}
-
-function speakParts(parts,voice,index=0){
- if(index>=parts.length){
-   speaking=false;
-   document.getElementById("voiceStatus").textContent="تەواو بوو ✅";
-   return;
- }
- const u=new SpeechSynthesisUtterance(parts[index]);
- if(voice){
-   u.voice=voice;
-   u.lang=voice.lang || "ar";
- }
- u.rate=.82;
- u.pitch=1;
- u.volume=1;
- u.onend=()=>speakParts(parts,voice,index+1);
- u.onerror=()=>speakParts(parts,voice,index+1);
- speechSynthesis.speak(u);
-}
-
-function readKurdish(){
+function playLesson(){
  if(!current) return;
- if(!("speechSynthesis" in window)){
-   document.getElementById("voiceStatus").textContent="براوزەرەکەت TTS پشتگیری ناکات.";
-   return;
- }
-
- speechSynthesis.cancel();
- speaking=true;
- document.getElementById("voiceStatus").textContent="🔊 دەنگی وانەکە ئامادە دەکرێت...";
-
- // Android sometimes returns an empty voice list for a short time.
- loadVoices();
- if(!voices.length){
-   setTimeout(readKurdish,700);
-   return;
- }
-
- const voice=chooseVoice();
- const isKurdish=voice && (/^ku/i.test(voice.lang)||/kurd|soran/i.test(voice.name||""));
- document.getElementById("voiceStatus").textContent=isKurdish
-   ?"🔊 دەنگی کوردی دەخوێنرێتەوە..."
-   :"🔊 دەنگی خوێندنەوە دەخوێنرێتەوە؛ دەنگی Sorani لە ئامێرەکەت بەردەست نییە.";
-
- speakParts(splitText(current),voice);
+ const a=document.getElementById("lessonAudio");
+ a.play().then(()=>document.getElementById("voiceStatus").textContent="🔊 دەنگی کوردیی AI پەخش دەکرێت...").catch(()=>document.getElementById("voiceStatus").textContent="⚠️ فایلەکەی دەنگی کوردیی AI لە audio/ دانەنراوە.");
 }
-
-function stopVoice(){
- if("speechSynthesis" in window) speechSynthesis.cancel();
- speaking=false;
- document.getElementById("voiceStatus").textContent="وەستێنرا ⏹️";
-}
+function stopVoice(){const a=document.getElementById("lessonAudio");a.pause();a.currentTime=0;document.getElementById("voiceStatus").textContent="وەستێنرا ⏹️";}
 </script>
 </body>
 </html>
