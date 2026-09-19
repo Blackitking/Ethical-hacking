@@ -1,111 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ku" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فێرکاری Cybersecurity و Ethical Hacking</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cyber Kurdish Academy</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#07111f;color:#eef6ff}
-header{padding:28px 18px;text-align:center;background:linear-gradient(135deg,#07111f,#102d46);border-bottom:1px solid #21415b}
-h1{margin:0 0 10px;font-size:30px}
-p{line-height:1.8;color:#c8d8e6}
-.container{max-width:1000px;margin:auto;padding:22px}
-.hero,.card{background:#0d1c2c;border:1px solid #1e3a52;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 10px 30px #0005}
-button{border:0;border-radius:12px;padding:13px 20px;font-size:16px;cursor:pointer;background:#19c37d;color:#06140e;font-weight:bold;margin:5px}
-button.secondary{background:#19344b;color:#eef6ff}
-#lessons{display:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.lesson{padding:18px;border:1px solid #23455f;border-radius:15px;background:#0a1725}
-.lesson h3{margin-top:0}
-video{width:100%;border-radius:14px;background:#000;margin:12px 0}
-iframe{width:100%;height:430px;border:0;border-radius:14px;background:#000}
-.small{font-size:14px;color:#9fb4c5}
-#status{min-height:24px;color:#75e0ae}
+*{box-sizing:border-box}body{margin:0;background:#06101b;color:#eef7ff;font-family:Arial,sans-serif}
+header{padding:32px 18px;text-align:center;background:linear-gradient(135deg,#071827,#123653)}
+h1{margin:0 0 8px}p{line-height:1.9;color:#c7d7e5}.wrap{max-width:1050px;margin:auto;padding:20px}
+.box{background:#0b1b2a;border:1px solid #21435d;border-radius:20px;padding:22px;margin:18px 0}
+button{background:#18c78a;color:#04130d;border:0;border-radius:12px;padding:12px 18px;font-weight:bold;font-size:16px;margin:4px;cursor:pointer}
+.secondary{background:#19364d;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:#091522;border:1px solid #21445e;border-radius:15px;padding:17px}.card h3{margin-top:0}
+#course{display:none}.video{position:relative;padding-top:56.25%;overflow:hidden;border-radius:15px;background:#000}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#voiceStatus{margin-top:10px;color:#72e1b0}.tag{display:inline-block;padding:5px 9px;border-radius:8px;background:#18354b;margin:3px;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-  <h1>🛡️ فێرکاری Cybersecurity و Ethical Hacking</h1>
-  <p>فێربوونی پاراستنی سیستەمەکان بە شێوەی یاسایی و پارێزراو</p>
+<h1>🛡️ Cyber Kurdish Academy</h1>
+<p>فێرکاریی Cybersecurity و Ethical Hacking بە کوردی</p>
 </header>
 
-<div class="container">
-  <section class="hero" id="start">
-    <h2>بەخێربێیت 👋</h2>
-    <p>ئەم سایتە بۆ فێربوونی بنەماکانی Cybersecurity و Ethical Hacking ـە. هەموو تاقیکردنەوەکان دەبێت لە سیستەمی خۆت یان لابراتواری ڕێپێدراودا بکرێن.</p>
-    <button onclick="startCourse()">دەست پێکردن 🚀</button>
-  </section>
+<main class="wrap">
+<section class="box">
+<h2>بەخێربێیت 👋</h2>
+<p>لەو سایتەدا بنەماکانی پاراستنی زانیاری و ئەخلاقی هاکینگ بە شێوەی فێرکاری و پارێزراو فێردەبیت.</p>
+<button onclick="start()">دەست پێکردن 🚀</button>
+</section>
 
-  <section id="lessons">
-    <div class="card">
-      <h2>📚 وانەکان</h2>
-      <div class="grid">
-        <div class="lesson"><h3>1️⃣ Cybersecurity چییە؟</h3><p>ناسینی هەڕەشەکان و چۆنیەتی پاراستنی زانیاری و سیستەم.</p><button onclick="showLesson(1)">کردنەوە</button></div>
-        <div class="lesson"><h3>2️⃣ Ethical Hacking</h3><p>تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەت.</p><button onclick="showLesson(2)">کردنەوە</button></div>
-        <div class="lesson"><h3>3️⃣ Network Security</h3><p>بنەماکانی پاراستنی تۆڕ و ناسینی هەڕەشەکان.</p><button onclick="showLesson(3)">کردنەوە</button></div>
-        <div class="lesson"><h3>4️⃣ Phishing</h3><p>چۆنیەتی ناسینەوەی نامە و لینکی فێڵبازانە.</p><button onclick="showLesson(4)">کردنەوە</button></div>
-        <div class="lesson"><h3>5️⃣ Password Security</h3><p>دروستکردنی وشەی نهێنی بەهێز و پاراستنی ئەکاونت.</p><button onclick="showLesson(5)">کردنەوە</button></div>
-        <div class="lesson"><h3>6️⃣ Web Security</h3><p>ناسینی کێشەکانی Web بە شێوەی فێرکاری و پارێزراو.</p><button onclick="showLesson(6)">کردنەوە</button></div>
-      </div>
-    </div>
+<section id="course">
+<section class="box">
+<h2>📚 وانەکان</h2>
+<div class="grid" id="lessonGrid"></div>
+</section>
 
-    <div class="card" id="lessonBox">
-      <h2>🎓 وانەی هەڵبژێردراو</h2>
-      <p id="lessonText">یەکێک لە وانەکان هەڵبژێرە.</p>
-      <button class="secondary" onclick="speakKurdish()">🔊 بیخوێنەوە بە دەنگ</button>
-      <button class="secondary" onclick="stopSpeech()">⏹️ وەستاندن</button>
-      <div id="status"></div>
-    </div>
+<section class="box">
+<h2 id="lessonTitle">وانەیەک هەڵبژێرە</h2>
+<p id="lessonText">لەسەر یەکێک لە وانەکان کرتە بکە.</p>
+<button class="secondary" onclick="readKurdish()">🔊 گوێگرتن بە کوردی</button>
+<button class="secondary" onclick="stopVoice()">⏹️ وەستاندن</button>
+<div id="voiceStatus"></div>
+</section>
 
-    <div class="card">
-      <h2>🎥 ڤیدیۆی فێرکاری</h2>
-      <p>ڤیدیۆکە لە ناو سایتەکەدا پەخش دەکرێت. بۆ بەکارهێنانی ڤیدیۆی YouTube، تەنها ناسنامەی ڤیدیۆکە لە کۆدەکە بگۆڕە.</p>
-      <iframe id="yt" src="https://www.youtube.com/embed?listType=search&list=cybersecurity%20for%20beginners" title="Cybersecurity training" allowfullscreen></iframe>
-      <p class="small">تێبینی: پەخشی YouTube لە ناو سایتەکەدا بە Embed ـە؛ دەنگی ڤیدیۆکە خۆکارانە نابێتە کوردی. دەقی کوردیی وانەکان لە خوارەوە بە دەنگی براوزەر دەخوێنرێتەوە.</p>
-    </div>
-
-    <div class="card">
-      <h2>🧪 لابراتواری پارێزراو</h2>
-      <p>تاقیکردنەوەی هاکینگ تەنها لە لابراتوار، CTF، یان سیستەمێک بکە کە خۆت خاوەنی یان مۆڵەتی تاقیکردنەوەت هەیە.</p>
-      <p>ئەم بەشە دەتوانرێت دواتر بە تمرینی تایبەتی بۆ Beginner و Advanced پڕ بکرێت.</p>
-    </div>
-  </section>
+<section class="box">
+<h2>🎥 ڤیدیۆی فێرکاری</h2>
+<p>ئەم ڤیدیۆیە لە ناو سایتەکەدا Embed کراوە.</p>
+<div class="video">
+<iframe id="videoFrame"
+src="https://www.youtube.com/embed/2tY6NXj4gyU?rel=0"
+title="Cybersecurity course"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen></iframe>
 </div>
+<p class="tag">Cybersecurity</p><p class="tag">Ethical Hacking</p>
+<p>تێبینی: ڤیدیۆی سەرەکی بە زمانی خۆی پەخش دەبێت؛ دەقی کوردیی وانەکە جیاوازە و دەتوانرێت بە دەنگ بخوێندرێتەوە. ڤیدیۆی هەڵبژێردراو لە YouTube ـە. citeturn0youtube17</p>
+</section>
+
+<section class="box">
+<h2>🧪 لابراتواری پارێزراو</h2>
+<p>هەر تاقیکردنەوەیەکی ئاسایشی تەنها لە سیستەمی خۆت یان ژینگەیەکی ڕێپێدراو ئەنجام بدە.</p>
+</section>
+</section>
+</main>
 
 <script>
-const lessons = {
-1:"Cybersecurity واتە پاراستنی کۆمپیوتەر، مۆبایل، تۆڕ و زانیاری لە هەڕەشە و دەستگەیشتنی نەخوازراو. یەکەم هەنگاو ناسینی هەڕەشە و بەکارهێنانی وشەی نهێنی بەهێز و نوێکردنەوەی سیستەمەکانە.",
-2:"Ethical Hacking واتە تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەتی خاوەنەکە. ئامانج دۆزینەوەی کێشەی ئاسایشی و چاککردنیانە، نەک زیانگەیاندن یان دەستگەیشتن بە ئەکاونتی کەسانی تر.",
-3:"Network Security بریتییە لە پاراستنی تۆڕ لە دەستگەیشتنی نەخوازراو و هەڕەشەکان. فێربوونی بنەماکانی Firewall، Encryption و ڕێکخستنی دەستگەیشتن گرنگە.",
-4:"Phishing جۆرێکە لە فێڵکردن کە هەوڵ دەدرێت بەکارهێنەر زانیاریی نهێنی بدات یان لینکێکی مەترسیدار بکاتەوە. ناونیشانی نامە، لینک، داواکارییە نامۆکان و فۆرمەکانی چوونەژوورەوە بە وردی بپشکنە.",
-5:"وشەی نهێنی نابێت ئاسان بێت و نابێت هەمان وشە بۆ چەند ئەکاونتێک بەکاربهێنرێت. دوو هەنگاوی پشتڕاستکردنەوە، کاتێک بەردەستە، پاراستنی ئەکاونت زیاد دەکات.",
-6:"Web Security بریتییە لە پاراستنی وێبسایت و Web Application. فێربوونی هەڵەکانی وەک XSS و SQL Injection تەنها لە ژینگەی تاقیکردنەوەی ڕێپێدراو و بۆ مەبەستی فێربوون و چاککردنەوە دەبێت."
-};
+const lessons=[
+["1️⃣","Cybersecurity چییە؟","Cybersecurity واتە پاراستنی کۆمپیوتەر، مۆبایل، تۆڕ و زانیاری لە دەستگەیشتنی نەخوازراو. یەکەم هەنگاو ناسینی هەڕەشەکان و بەکارهێنانی وشەی نهێنی بەهێز و نوێکردنەوەی سیستەمەکانە."],
+["2️⃣","Ethical Hacking","Ethical Hacking واتە تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەتی خاوەنەکە. ئامانج دۆزینەوەی کێشەی ئاسایشی و چاککردنیانە، نەک زیانگەیاندن."],
+["3️⃣","Network Security","Network Security بریتییە لە پاراستنی تۆڕ لە دەستگەیشتنی نەخوازراو. Firewall، Encryption و ڕێکخستنی دەستگەیشتن لە بنەما گرنگەکانن."],
+["4️⃣","Phishing","Phishing جۆرێکە لە فێڵکردن بۆ وەرگرتنی زانیاریی نهێنی. پێش کردنەوەی لینک یان دانانی زانیاری، سەرچاوە و ناونیشانی سایت بە وردی بپشکنە."],
+["5️⃣","Password Security","وشەی نهێنی نابێت ئاسان بێت و باشە بۆ هەر ئەکاونتێک وشەی جیاواز بەکاربهێنیت. دوو هەنگاوی پشتڕاستکردنەوەش پاراستن زیاد دەکات."],
+["6️⃣","Web Security","Web Security بریتییە لە پاراستنی وێبسایت و Web Application. هەڵەکانی وەک XSS و SQL Injection لە ژینگەی تاقیکردنەوەی ڕێپێدراو فێربە بۆ چاککردنەوەی پاراستن."]
+];
 
-let currentText = "";
-
-function startCourse(){
-  document.getElementById("lessons").style.display="block";
-  document.getElementById("lessons").scrollIntoView({behavior:"smooth"});
+let current="";
+const grid=document.getElementById("lessonGrid");
+lessons.forEach((x,i)=>{
+ const d=document.createElement("div");d.className="card";
+ d.innerHTML=`<h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p><button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە</button>`;
+ grid.appendChild(d);
+});
+function start(){document.getElementById("course").style.display="block";document.getElementById("course").scrollIntoView({behavior:"smooth"});selectLesson(0)}
+function selectLesson(i){current=lessons[i][2];document.getElementById("lessonTitle").textContent=lessons[i][1];document.getElementById("lessonText").textContent=current;document.getElementById("voiceStatus").textContent=""}
+function getKurdishVoice(){
+ const voices=speechSynthesis.getVoices();
+ return voices.find(v=>/^ku(-|$)/i.test(v.lang)) ||
+        voices.find(v=>/kurd|کرد|کورد/i.test(v.name+" "+v.lang)) || null;
 }
-function showLesson(n){
-  currentText=lessons[n];
-  document.getElementById("lessonText").textContent=currentText;
-  document.getElementById("lessonBox").scrollIntoView({behavior:"smooth"});
+function readKurdish(){
+ if(!current)return;
+ if(!("speechSynthesis" in window)){document.getElementById("voiceStatus").textContent="ئەم براوزەرە پشتگیری لە خوێندنەوەی دەنگی ناکات.";return}
+ speechSynthesis.cancel();
+ const voice=getKurdishVoice();
+ if(!voice){
+   document.getElementById("voiceStatus").textContent="دەنگی کوردی لەسەر ئامێرەکەت بەردەست نییە. دەبێت دەنگێکی Kurdish TTS لە سیستەمەکە زیاد بکرێت.";
+   return;
+ }
+ const u=new SpeechSynthesisUtterance(current);u.voice=voice;u.lang=voice.lang;u.rate=.88;u.pitch=1;
+ u.onstart=()=>document.getElementById("voiceStatus").textContent="🔊 دەنگی کوردی دەخوێنرێتەوە...";
+ u.onend=()=>document.getElementById("voiceStatus").textContent="تەواو بوو.";
+ speechSynthesis.speak(u);
 }
-function speakKurdish(){
-  if(!currentText){document.getElementById("status").textContent="سەرەتا وانەیەک هەڵبژێرە.";return;}
-  if(!("speechSynthesis" in window)){document.getElementById("status").textContent="براوزەرەکەت پشتگیری لە خوێندنەوەی دەنگی ناکات.";return;}
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(currentText);
-  u.lang="ku";
-  u.rate=0.9;
-  u.pitch=1;
-  speechSynthesis.speak(u);
-  document.getElementById("status").textContent="🔊 دەقی کوردی دەخوێنرێتەوە...";
-}
-function stopSpeech(){if("speechSynthesis" in window)speechSynthesis.cancel();}
+function stopVoice(){if("speechSynthesis" in window){speechSynthesis.cancel();document.getElementById("voiceStatus").textContent="وەستێنرا."}}
+speechSynthesis.onvoiceschanged=()=>{};
 </script>
 </body>
 </html>
