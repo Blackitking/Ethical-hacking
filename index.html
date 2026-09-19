@@ -54,7 +54,7 @@ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; pic
 allowfullscreen></iframe>
 </div>
 <p class="tag">Cybersecurity</p><p class="tag">Ethical Hacking</p>
-<p>تێبینی: ڤیدیۆی سەرەکی بە زمانی خۆی پەخش دەبێت؛ دەقی کوردیی وانەکە جیاوازە و دەتوانرێت بە دەنگ بخوێندرێتەوە. ڤیدیۆی هەڵبژێردراو لە YouTube ـە. citeturn0youtube17</p>
+<p>تێبینی: دەقی وانەکان کوردییە. بۆ دەنگ، ئەگەر لە مۆبایلەکەت دەنگی Sorani نەبێت، براوزەر دەنگی بەردەستی سیستەم بەکاردهێنێت تا وانەکە بێدەنگ نەبێت.</p>
 </section>
 
 <section class="box">
@@ -127,35 +127,120 @@ const lessons=[
 ];
 
 let current="";
+let voices=[];
+let speaking=false;
+
 const grid=document.getElementById("lessonGrid");
 lessons.forEach((x,i)=>{
- const d=document.createElement("div");d.className="card";
- d.innerHTML=`<h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p><button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە</button>`;
+ const d=document.createElement("div");
+ d.className="card";
+ d.innerHTML=`<h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p>
+ <button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە 🔊</button>`;
  grid.appendChild(d);
 });
-function start(){document.getElementById("course").style.display="block";document.getElementById("course").scrollIntoView({behavior:"smooth"});selectLesson(0)}
-function selectLesson(i){current=lessons[i][2];document.getElementById("lessonTitle").textContent=lessons[i][1];document.getElementById("lessonText").textContent=current;document.getElementById("voiceStatus").textContent=""}
-function getKurdishVoice(){
- const voices=speechSynthesis.getVoices();
- return voices.find(v=>/^ku(-|$)/i.test(v.lang)) ||
-        voices.find(v=>/kurd|کرد|کورد/i.test(v.name+" "+v.lang)) || null;
+
+function start(){
+ document.getElementById("course").style.display="block";
+ document.getElementById("course").scrollIntoView({behavior:"smooth"});
+ selectLesson(0);
 }
-function readKurdish(){
- if(!current)return;
- if(!("speechSynthesis" in window)){document.getElementById("voiceStatus").textContent="ئەم براوزەرە پشتگیری لە خوێندنەوەی دەنگی ناکات.";return}
- speechSynthesis.cancel();
- const voice=getKurdishVoice();
- if(!voice){
-   document.getElementById("voiceStatus").textContent="دەنگی کوردی لەسەر ئامێرەکەت بەردەست نییە. دەبێت دەنگێکی Kurdish TTS لە سیستەمەکە زیاد بکرێت.";
+
+function selectLesson(i){
+ current=lessons[i][2];
+ document.getElementById("lessonTitle").textContent=lessons[i][1];
+ document.getElementById("lessonText").textContent=current;
+ document.getElementById("voiceStatus").textContent="";
+ readKurdish();
+}
+
+function loadVoices(){
+ if("speechSynthesis" in window) voices=speechSynthesis.getVoices() || [];
+}
+loadVoices();
+if("speechSynthesis" in window) speechSynthesis.onvoiceschanged=loadVoices;
+
+function chooseVoice(){
+ loadVoices();
+
+ // First try an actual Kurdish/Sorani voice.
+ let v=voices.find(x=>/^ku(-|_)/i.test(x.lang));
+ if(v) return v;
+ v=voices.find(x=>/kurd|soran/i.test((x.name||"")+" "+(x.lang||"")));
+ if(v) return v;
+
+ // Android/Chrome often has no Sorani voice. Use an Arabic voice
+ // so the Kurdish Arabic-script text is at least spoken instead of failing.
+ v=voices.find(x=>/^ar(-|_)/i.test(x.lang));
+ if(v) return v;
+ return voices.find(x=>/arabic|العربية|عربي/i.test(x.name||"")) || voices[0] || null;
+}
+
+function splitText(text,max=180){
+ const words=text.split(/\s+/);
+ const out=[]; let part="";
+ for(const word of words){
+   if((part+" "+word).trim().length>max){
+     if(part) out.push(part.trim());
+     part=word;
+   }else{
+     part=(part+" "+word).trim();
+   }
+ }
+ if(part) out.push(part.trim());
+ return out;
+}
+
+function speakParts(parts,voice,index=0){
+ if(index>=parts.length){
+   speaking=false;
+   document.getElementById("voiceStatus").textContent="تەواو بوو ✅";
    return;
  }
- const u=new SpeechSynthesisUtterance(current);u.voice=voice;u.lang=voice.lang;u.rate=.88;u.pitch=1;
- u.onstart=()=>document.getElementById("voiceStatus").textContent="🔊 دەنگی کوردی دەخوێنرێتەوە...";
- u.onend=()=>document.getElementById("voiceStatus").textContent="تەواو بوو.";
+ const u=new SpeechSynthesisUtterance(parts[index]);
+ if(voice){
+   u.voice=voice;
+   u.lang=voice.lang || "ar";
+ }
+ u.rate=.82;
+ u.pitch=1;
+ u.volume=1;
+ u.onend=()=>speakParts(parts,voice,index+1);
+ u.onerror=()=>speakParts(parts,voice,index+1);
  speechSynthesis.speak(u);
 }
-function stopVoice(){if("speechSynthesis" in window){speechSynthesis.cancel();document.getElementById("voiceStatus").textContent="وەستێنرا."}}
-speechSynthesis.onvoiceschanged=()=>{};
+
+function readKurdish(){
+ if(!current) return;
+ if(!("speechSynthesis" in window)){
+   document.getElementById("voiceStatus").textContent="براوزەرەکەت TTS پشتگیری ناکات.";
+   return;
+ }
+
+ speechSynthesis.cancel();
+ speaking=true;
+ document.getElementById("voiceStatus").textContent="🔊 دەنگی وانەکە ئامادە دەکرێت...";
+
+ // Android sometimes returns an empty voice list for a short time.
+ loadVoices();
+ if(!voices.length){
+   setTimeout(readKurdish,700);
+   return;
+ }
+
+ const voice=chooseVoice();
+ const isKurdish=voice && (/^ku/i.test(voice.lang)||/kurd|soran/i.test(voice.name||""));
+ document.getElementById("voiceStatus").textContent=isKurdish
+   ?"🔊 دەنگی کوردی دەخوێنرێتەوە..."
+   :"🔊 دەنگی خوێندنەوە دەخوێنرێتەوە؛ دەنگی Sorani لە ئامێرەکەت بەردەست نییە.";
+
+ speakParts(splitText(current),voice);
+}
+
+function stopVoice(){
+ if("speechSynthesis" in window) speechSynthesis.cancel();
+ speaking=false;
+ document.getElementById("voiceStatus").textContent="وەستێنرا ⏹️";
+}
 </script>
 </body>
 </html>
