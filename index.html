@@ -1,156 +1,205 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ku" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cyber Kurdish Academy</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>کۆنکان آنلاین</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#06101b;color:#eef7ff;font-family:Arial,sans-serif}
-header{padding:32px 18px;text-align:center;background:linear-gradient(135deg,#071827,#123653)}
-h1{margin:0 0 8px}p{line-height:1.9;color:#c7d7e5}.wrap{max-width:1050px;margin:auto;padding:20px}
-.box{background:#0b1b2a;border:1px solid #21435d;border-radius:20px;padding:22px;margin:18px 0}
-button{background:#18c78a;color:#04130d;border:0;border-radius:12px;padding:12px 18px;font-weight:bold;font-size:16px;margin:4px;cursor:pointer}
-.secondary{background:#19364d;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:#091522;border:1px solid #21445e;border-radius:15px;padding:17px}.card h3{margin-top:0}
-#course{display:none}.video{position:relative;padding-top:56.25%;overflow:hidden;border-radius:15px;background:#000}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-#voiceStatus{margin-top:10px;color:#72e1b0}.tag{display:inline-block;padding:5px 9px;border-radius:8px;background:#18354b;margin:3px;font-size:13px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#07111f,#123b2a);color:#fff;min-height:100vh}
+button,input{font:inherit}
+.app{max-width:900px;margin:auto;padding:18px}
+.card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:20px;box-shadow:0 15px 45px #0005;backdrop-filter:blur(8px)}
+h1,h2,p{text-align:center}
+.screen{display:none}.screen.active{display:block}
+.btn{border:0;border-radius:14px;padding:13px 18px;cursor:pointer;background:#16a34a;color:#fff;font-weight:700;margin:5px}
+.btn.secondary{background:#334155}.btn.gold{background:#d49b18}.btn.danger{background:#b91c1c}
+input{width:100%;padding:14px;border:1px solid #ffffff33;background:#ffffff12;color:#fff;border-radius:12px;outline:none;margin:7px 0}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.coins{background:#d49b18;color:#17120a;padding:9px 14px;border-radius:20px;font-weight:bold}
+.players{display:flex;justify-content:space-between;gap:12px;margin:14px 0}
+.player{flex:1;text-align:center;background:#0003;border-radius:15px;padding:12px}
+.table{background:#176b3a;border:8px solid #5a351e;border-radius:28px;padding:18px;min-height:440px;position:relative;overflow:hidden}
+.turn{font-weight:bold;text-align:center;background:#0005;border-radius:12px;padding:8px}
+.pile{display:flex;justify-content:center;gap:14px;margin:20px 0}
+.deck,.discard{width:66px;height:92px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:bold}
+.deck{background:repeating-linear-gradient(45deg,#1d4ed8,#1d4ed8 5px,#fff 5px,#fff 8px);border:3px solid #fff;color:#fff}
+.discard{background:#fff;color:#111;border:2px solid #ddd}
+.hand{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:14px}
+.cardx{width:52px;height:76px;background:#fff;color:#111;border-radius:8px;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;cursor:pointer;transition:.15s}
+.cardx.red{color:#dc2626}.cardx.selected{transform:translateY(-12px);box-shadow:0 0 0 3px #facc15}
+.small{opacity:.8;font-size:13px;text-align:center}
+.log{max-height:130px;overflow:auto;background:#0004;border-radius:12px;padding:10px;font-size:13px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+@media(max-width:600px){.app{padding:10px}.card{padding:13px}.table{min-height:420px;padding:10px}.cardx{width:43px;height:66px;font-size:15px}.deck,.discard{width:58px;height:82px}}
 </style>
 </head>
 <body>
-<header>
-<h1>🛡️ Cyber Kurdish Academy</h1>
-<p>فێرکاریی Cybersecurity و Ethical Hacking بە کوردی</p>
-</header>
+<div class="app">
 
-<main class="wrap">
-<section class="box">
-<h2>بەخێربێیت 👋</h2>
-<p>لەو سایتەدا بنەماکانی پاراستنی زانیاری و ئەخلاقی هاکینگ بە شێوەی فێرکاری و پارێزراو فێردەبیت.</p>
-<button onclick="start()">دەست پێکردن 🚀</button>
-</section>
-
-<section id="course">
-<section class="box">
-<h2>📚 وانەکان</h2>
-<div class="grid" id="lessonGrid"></div>
-</section>
-
-<section class="box">
-<h2 id="lessonTitle">وانەیەک هەڵبژێرە</h2>
-<p id="lessonText">لەسەر یەکێک لە وانەکان کرتە بکە.</p>
-<button class="secondary" onclick="playLesson()">🔊 گوێگرتن بە کوردیی AI</button>
-<button class="secondary" onclick="stopVoice()">⏹️ وەستاندن</button>
-<div id="voiceStatus"></div>
-</section>
-
-<section class="box">
-<h2>🎥 ڤیدیۆ + دەنگی کوردیی AI</h2>
-<p>ڤیدیۆکە لە YouTube ـە. دەنگی YouTube لێرەدا بێدەنگ دەکرێت و دەنگی کوردیی AI ـی تایبەت بە وانەکە لە فایلێکی جیاواز پەخش دەکرێت.</p>
-<div class="video">
-<iframe id="videoFrame"
-src="https://www.youtube.com/embed/ZxIUjlwj7mg?rel=0&mute=1&playsinline=1"
-title="Cybersecurity Threats Kurdish"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen></iframe>
+<section id="home" class="screen active">
+<div class="card">
+<h1>🃏 کۆنکان آنلاین</h1>
+<p>یاریی کارتی ٥٢ کارت بۆ دوو یاریزان</p>
+<div class="top">
+<span class="coins">🪙 کۆین: <b id="homeCoins">1000</b></span>
+<span>🏆 خاڵ: <b id="homeScore">0</b></span>
 </div>
-<audio id="lessonAudio" controls preload="none" style="width:100%;margin-top:14px"></audio>
-<p id="mediaStatus" class="tag">🎙️ دەنگی کوردیی AI: فایلەکە پاشکەوت بکە لە audio/</p>
-<p class="tag">YouTube</p><p class="tag">Sorani AI Voice</p>
-<p>تێبینی: بۆ پاراستنی مافی ڤیدیۆ، دەنگی ڕەسەنی ڤیدیۆی YouTube کۆپی ناکرێت. دەنگی کوردیی AI بە شێوەی جیاواز لەگەڵ ڤیدیۆکە پەخش دەکرێت.</p>
+<br>
+<button class="btn" onclick="show('create')">➕ دروستکردنی ژوور</button>
+<button class="btn secondary" onclick="show('join')">🚪 چوونە ناو ژوور</button>
+<hr style="border-color:#ffffff22">
+<p class="small">ئەم وەشانە بۆ تاقیکردنەوەی UI و لۆجیکی یارییە. بۆ Online ـی ڕاستەقینە پێویستی بە backend/Supabase هەیە.</p>
+</div>
 </section>
 
-<section class="box">
-<h2>🧪 لابراتواری پارێزراو</h2>
-<p>هەر تاقیکردنەوەیەکی ئاسایشی تەنها لە سیستەمی خۆت یان ژینگەیەکی ڕێپێدراو ئەنجام بدە.</p>
+<section id="create" class="screen">
+<div class="card">
+<h2>دروستکردنی ژوور</h2>
+<input id="creator" placeholder="ناوی یاریزان">
+<div class="row">
+<button class="btn" onclick="createRoom()">دروستکردن</button>
+<button class="btn secondary" onclick="show('home')">گەڕانەوە</button>
+</div>
+<div id="roomResult"></div>
+</div>
 </section>
 
-<section class="box">
-<h2>📱 فێرکاری Termux</h2>
-<p>Termux ژینگەیەکی Linux ـە لەسەر Android. ئەم فرمانانە بۆ فێربوونی بنەما و بەڕێوەبردنی فایل و پەکەجەکانن.</p>
-<pre><code>pkg update
-pkg upgrade
-pkg install git
-pkg install python
-pwd
-ls
-cd
-mkdir lab
-cd lab
-touch note.txt
-cat note.txt
-cp note.txt copy.txt
-mv copy.txt renamed.txt
-rm renamed.txt
-python --version
-git --version</code></pre>
+<section id="join" class="screen">
+<div class="card">
+<h2>چوونە ناو ژوور</h2>
+<input id="joinName" placeholder="ناوی یاریزان">
+<input id="roomCode" placeholder="کۆدی ژوور">
+<div class="row">
+<button class="btn" onclick="joinRoom()">چوونە ژوور</button>
+<button class="btn secondary" onclick="show('home')">گەڕانەوە</button>
+</div>
+<p id="joinMsg" class="small"></p>
+</div>
 </section>
 
-<section class="box">
-<h2>🐉 فێرکاری Kali Linux</h2>
-<p>Kali Linux بۆ تاقیکردنەوەی ئاسایش و فێربوونە. فرمانەکانی خوارەوە بنەڕەتی و بۆ سیستەمی خۆت/لابراتوار بەکاربهێنە.</p>
-<pre><code>whoami
-pwd
-ls -la
-cd
-mkdir security-lab
-cd security-lab
-touch notes.txt
-cat notes.txt
-cp notes.txt backup.txt
-mv backup.txt notes-backup.txt
-rm notes-backup.txt
-ip addr
-ip route
-ping -c 4 127.0.0.1
-uname -a
-df -h
-free -h
-ps
-sudo apt update
-sudo apt upgrade</code></pre>
+<section id="game" class="screen">
+<div class="card">
+<div class="top">
+<button class="btn secondary" onclick="show('home')">🏠</button>
+<span class="coins">🪙 <b id="gameCoins">1000</b></span>
+<span>ژوور: <b id="gameRoom">----</b></span>
+</div>
+<div class="players">
+<div class="player">👤 <b id="p1">یاریزان ١</b><br>خاڵ: <span id="s1">0</span></div>
+<div class="player">👤 <b id="p2">یاریزان ٢</b><br>خاڵ: <span id="s2">0</span></div>
+</div>
+<div class="table">
+<div class="turn" id="turn">نۆرەی یاریزان ١</div>
+<div class="pile">
+<div><div class="deck" onclick="drawCard()">🂠</div><div class="small">کارتەکان</div></div>
+<div><div class="discard" id="discard">-</div><div class="small">فڕێدراو</div></div>
+</div>
+<p id="message">کارتێک هەڵبژێرە یان کارتێک وەرگرە.</p>
+<div id="opponentHand" class="hand"></div>
+<hr style="border-color:#ffffff33">
+<div id="hand" class="hand"></div>
+<div style="text-align:center;margin-top:12px">
+<button class="btn gold" onclick="discardSelected()">فڕێدانی کارت</button>
+<button class="btn" onclick="newRound()">گەڕاندنەوەی یاری</button>
+</div>
+</div>
+<h3>📜 تۆمار</h3>
+<div id="log" class="log"></div>
+</div>
 </section>
-
-<section class="box">
-<h2>🧪 لابراتواری فێربوون</h2>
-<p>بۆ هاکینگ و Penetration Testing، تاقیکردنەوە لەسەر لابراتواری خۆت یان ژینگەی ڕێپێدراو بکە. دەتوانیت دواتر بەشێکی CTF ـی ناوخۆیی بۆ سایتەکە زیاد بکەیت.</p>
-</section>
-
-</section>
-</main>
+</div>
 
 <script>
-const lessons=[
-{id:"cybersecurity",icon:"1️⃣",title:"Cybersecurity چییە؟",text:"Cybersecurity واتە پاراستنی کۆمپیوتەر، مۆبایل، تۆڕ و زانیاری لە دەستگەیشتنی نەخوازراو. یەکەم هەنگاو ناسینی هەڕەشەکان و پاراستنی زانیارییەکانە.",video:"ZxIUjlwj7mg",audio:"audio/cybersecurity.wav"},
-{id:"ethical",icon:"2️⃣",title:"Ethical Hacking",text:"Ethical Hacking واتە تاقیکردنەوەی ئاسایشی سیستەم بە مۆڵەتی خاوەنەکە. ئامانج دۆزینەوەی کێشەی ئاسایشی و چاککردنیانە، نەک زیانگەیاندن.",video:"ZxIUjlwj7mg",audio:"audio/ethical-hacking.wav"},
-{id:"network",icon:"3️⃣",title:"Network Security",text:"Network Security بریتییە لە پاراستنی تۆڕ لە دەستگەیشتنی نەخوازراو. Firewall و Encryption و ڕێکخستنی دەستگەیشتن لە بنەما گرنگەکانن.",video:"ZxIUjlwj7mg",audio:"audio/network-security.wav"},
-{id:"phishing",icon:"4️⃣",title:"Phishing",text:"Phishing جۆرێکە لە فێڵکردن بۆ وەرگرتنی زانیاریی نهێنی. پێش کردنەوەی لینک یان دانانی زانیاری، سەرچاوە و ناونیشانی سایت بە وردی بپشکنە.",video:"ZxIUjlwj7mg",audio:"audio/phishing.wav"},
-{id:"password",icon:"5️⃣",title:"Password Security",text:"وشەی نهێنی نابێت ئاسان بێت و باشە بۆ هەر ئەکاونتێک وشەی جیاواز بەکاربهێنیت. دوو هەنگاوی پشتڕاستکردنەوەش پاراستن زیاد دەکات.",video:"ZxIUjlwj7mg",audio:"audio/password-security.wav"},
-{id:"web",icon:"6️⃣",title:"Web Security",text:"Web Security بریتییە لە پاراستنی وێبسایت و Web Application. هەڵەکانی وەک XSS و SQL Injection لە ژینگەی تاقیکردنەوەی ڕێپێدراو فێربە بۆ چاککردنەوەی پاراستن.",video:"ZxIUjlwj7mg",audio:"audio/web-security.wav"}
+const suits=[
+ {s:'♠',r:false},{s:'♥',r:true},{s:'♦',r:true},{s:'♣',r:false}
 ];
-let current=null;
-const grid=document.getElementById("lessonGrid");
-lessons.forEach((x,i)=>{
- const d=document.createElement("div"); d.className="card";
- d.innerHTML=`<h3>${x.icon} ${x.title}</h3><p>${x.text}</p><button class="secondary" onclick="selectLesson(${i})">وانەکە بخوێنەوە 🔊</button>`;
- grid.appendChild(d);
-});
-function start(){document.getElementById("course").style.display="block";document.getElementById("course").scrollIntoView({behavior:"smooth"});selectLesson(0);}
-function selectLesson(i){
- current=lessons[i];
- document.getElementById("lessonTitle").textContent=current.title;
- document.getElementById("lessonText").textContent=current.text;
- document.getElementById("videoFrame").src=`https://www.youtube.com/embed/${current.video}?rel=0&mute=1&playsinline=1`;
- const audio=document.getElementById("lessonAudio");
- audio.pause(); audio.currentTime=0; audio.src=current.audio; audio.load();
- document.getElementById("voiceStatus").textContent="";
- document.getElementById("mediaStatus").textContent=`🎙️ دەنگی کوردیی AI: ${current.audio}`;
+const ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+let deck=[],hand=[],opponent=[],discard='',selected=-1,turn=1,score1=0,score2=0,room='';
+let coins=1000;
+
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function makeDeck(){
+ deck=[];
+ suits.forEach(x=>ranks.forEach(r=>deck.push({r,s:x.s,red:x.r})));
+ deck.sort(()=>Math.random()-.5);
 }
-function playLesson(){
- if(!current) return;
- const a=document.getElementById("lessonAudio");
- a.play().then(()=>document.getElementById("voiceStatus").textContent="🔊 دەنگی کوردیی AI پەخش دەکرێت...").catch(()=>document.getElementById("voiceStatus").textContent="⚠️ فایلەکەی دەنگی کوردیی AI لە audio/ دانەنراوە.");
+function cardText(c){return c.r+c.s}
+function createRoom(){
+ const name=document.getElementById('creator').value.trim()||'یاریزان ١';
+ room=Math.random().toString(36).slice(2,8).toUpperCase();
+ document.getElementById('roomResult').innerHTML='<p>ژوورەکەت دروستکرا:</p><h2>'+room+'</h2><p class="small">کۆدی ژوورەکە بۆ یاریزانی دووەم بنێرە.</p><button class="btn" onclick="startGame(\''+name+'\',\'یاریزان ٢\')">▶️ دەستپێکردنی تاقیکردنەوە</button>';
 }
-function stopVoice(){const a=document.getElementById("lessonAudio");a.pause();a.currentTime=0;document.getElementById("voiceStatus").textContent="وەستێنرا ⏹️";}
+function joinRoom(){
+ const name=document.getElementById('joinName').value.trim()||'یاریزان ٢';
+ const code=document.getElementById('roomCode').value.trim().toUpperCase();
+ if(!code){document.getElementById('joinMsg').textContent='تکایە کۆدی ژوور بنووسە.';return}
+ room=code; startGame('یاریزان ١',name);
+}
+function startGame(a,b){
+ document.getElementById('p1').textContent=a;
+ document.getElementById('p2').textContent=b;
+ document.getElementById('gameRoom').textContent=room||'LOCAL';
+ show('game'); newRound();
+}
+function newRound(){
+ makeDeck(); hand=deck.splice(0,7); opponent=deck.splice(0,7); discard=cardText(deck.pop()); selected=-1; turn=1;
+ log('یارییەکی نوێ دەستی پێکرد.');
+ render();
+}
+function render(){
+ document.getElementById('gameCoins').textContent=coins;
+ document.getElementById('homeCoins').textContent=coins;
+ document.getElementById('s1').textContent=score1;
+ document.getElementById('s2').textContent=score2;
+ document.getElementById('discard').textContent=discard;
+ document.getElementById('turn').textContent='نۆرەی '+(turn===1?document.getElementById('p1').textContent:document.getElementById('p2').textContent);
+ document.getElementById('hand').innerHTML=hand.map((c,i)=>'<div class="cardx '+(c.red?'red':'')+(selected===i?' selected':'')+'" onclick="selectCard('+i+')">'+cardText(c)+'</div>').join('');
+ document.getElementById('opponentHand').innerHTML=opponent.map(()=>'<div class="cardx">🂠</div>').join('');
+}
+function selectCard(i){
+ if(turn!==1)return;
+ selected=selected===i?-1:i;
+ document.getElementById('message').textContent=selected<0?'کارتێک هەڵبژێرە.':'ئەم کارتە هەڵبژێردراوە: '+cardText(hand[selected]);
+ render();
+}
+function drawCard(){
+ if(turn!==1){document.getElementById('message').textContent='ئێستا نۆرەی تۆ نییە.';return}
+ if(!deck.length){document.getElementById('message').textContent='کارت نەماوە.';return}
+ hand.push(deck.pop());
+ log('یاریزانی ١ کارتێکی نوێی وەرگرت.');
+ turn=2; selected=-1; render();
+ setTimeout(aiTurn,700);
+}
+function discardSelected(){
+ if(turn!==1||selected<0)return;
+ discard=cardText(hand.splice(selected,1)[0]);
+ log('یاریزانی ١ کارتێکی فڕێدا: '+discard);
+ selected=-1; turn=2; render();
+ setTimeout(aiTurn,700);
+}
+function aiTurn(){
+ if(turn!==2)return;
+ if(deck.length)opponent.push(deck.pop());
+ if(opponent.length){
+  const c=opponent.pop(); discard=cardText(c); log('یاریزانی ٢ نۆرەکەی تەواو کرد.');
+ }
+ turn=1; render();
+ checkEnd();
+}
+function checkEnd(){
+ if(hand.length===0){
+  score1+=100; coins+=50; log('🎉 یاریزانی ١ بردیەوە و ٥٠ کۆینی خۆڕایی وەرگرت.');
+  document.getElementById('homeScore').textContent=score1; render();
+ }else if(opponent.length===0){
+  score2+=100; log('یاریزانی ٢ بردیەوە.');
+  render();
+ }
+}
+function log(t){
+ const el=document.getElementById('log');
+ el.innerHTML='<div>'+new Date().toLocaleTimeString()+' — '+t+'</div>'+el.innerHTML;
+}
 </script>
 </body>
 </html>
