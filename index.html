@@ -2,204 +2,179 @@
 <html lang="ku" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>کۆنکان آنلاین</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>کۆنکانی کوردی</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#07111f,#123b2a);color:#fff;min-height:100vh}
+:root{
+ --bg:#071b16;--felt:#08734b;--felt2:#07583b;--gold:#e7bd58;--cream:#fff8e7;
+ --dark:#101827;--red:#d73535;--muted:#b9d4c7;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:radial-gradient(circle at 50% 10%,#153c31,#04110e 70%);color:white;font-family:Tahoma,Arial,sans-serif;min-height:100vh}
 button,input{font:inherit}
-.app{max-width:900px;margin:auto;padding:18px}
-.card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:20px;box-shadow:0 15px 45px #0005;backdrop-filter:blur(8px)}
-h1,h2,p{text-align:center}
+.app{width:min(100%,980px);margin:auto;padding:12px}
 .screen{display:none}.screen.active{display:block}
-.btn{border:0;border-radius:14px;padding:13px 18px;cursor:pointer;background:#16a34a;color:#fff;font-weight:700;margin:5px}
-.btn.secondary{background:#334155}.btn.gold{background:#d49b18}.btn.danger{background:#b91c1c}
-input{width:100%;padding:14px;border:1px solid #ffffff33;background:#ffffff12;color:#fff;border-radius:12px;outline:none;margin:7px 0}
-.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.coins{background:#d49b18;color:#17120a;padding:9px 14px;border-radius:20px;font-weight:bold}
-.players{display:flex;justify-content:space-between;gap:12px;margin:14px 0}
-.player{flex:1;text-align:center;background:#0003;border-radius:15px;padding:12px}
-.table{background:#176b3a;border:8px solid #5a351e;border-radius:28px;padding:18px;min-height:440px;position:relative;overflow:hidden}
-.turn{font-weight:bold;text-align:center;background:#0005;border-radius:12px;padding:8px}
-.pile{display:flex;justify-content:center;gap:14px;margin:20px 0}
-.deck,.discard{width:66px;height:92px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:bold}
-.deck{background:repeating-linear-gradient(45deg,#1d4ed8,#1d4ed8 5px,#fff 5px,#fff 8px);border:3px solid #fff;color:#fff}
-.discard{background:#fff;color:#111;border:2px solid #ddd}
-.hand{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:14px}
-.cardx{width:52px;height:76px;background:#fff;color:#111;border-radius:8px;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;cursor:pointer;transition:.15s}
-.cardx.red{color:#dc2626}.cardx.selected{transform:translateY(-12px);box-shadow:0 0 0 3px #facc15}
-.small{opacity:.8;font-size:13px;text-align:center}
-.log{max-height:130px;overflow:auto;background:#0004;border-radius:12px;padding:10px;font-size:13px}
-.row{display:flex;gap:8px}.row>*{flex:1}
-@media(max-width:600px){.app{padding:10px}.card{padding:13px}.table{min-height:420px;padding:10px}.cardx{width:43px;height:66px;font-size:15px}.deck,.discard{width:58px;height:82px}}
+.panel{background:linear-gradient(145deg,#10251f,#0a1714);border:1px solid #ffffff18;border-radius:24px;padding:18px;box-shadow:0 18px 60px #0008}
+.logo{font-size:58px;text-align:center;filter:drop-shadow(0 8px 10px #0007)}
+h1,h2{text-align:center;margin:8px 0}.sub{text-align:center;color:var(--muted)}
+.btn{border:0;border-radius:15px;padding:13px 18px;margin:5px;cursor:pointer;font-weight:800;color:#17130a;background:linear-gradient(#f5d77d,#c99628);box-shadow:0 5px 0 #80601d}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #80601d}.btn.dark{background:#263a34;color:#fff;box-shadow:0 5px 0 #14231f}
+input{width:100%;padding:14px;border-radius:13px;border:1px solid #ffffff20;background:#ffffff0b;color:#fff;outline:0;margin:6px 0}
+.home-actions{text-align:center;margin-top:18px}
+.stats{display:flex;gap:10px;margin:15px 0}.stat{flex:1;background:#ffffff0b;border:1px solid #ffffff12;border-radius:15px;padding:12px;text-align:center}.stat b{display:block;color:var(--gold);font-size:20px}
+.gamebar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.coin{background:#332813;border:1px solid #80601d;color:#f6d875;border-radius:20px;padding:8px 12px;font-weight:bold}
+.board{position:relative;background:
+ radial-gradient(circle at 50% 48%,#129060,#086b47 48%,#07583b 100%);
+ border:10px solid #5b351d;border-radius:34px;min-height:650px;overflow:hidden;
+ box-shadow:inset 0 0 45px #002b1d,0 20px 50px #0008;padding:16px}
+.board:before{content:"";position:absolute;inset:9px;border:2px solid #ffffff1c;border-radius:25px;pointer-events:none}
+.player{position:absolute;left:18px;right:18px;background:#06130fbb;border:1px solid #ffffff16;border-radius:16px;padding:8px 12px;z-index:3}
+.player.top{top:15px}.player.bottom{bottom:15px}
+.playerline{display:flex;justify-content:space-between;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;background:#17352d;display:inline-flex;align-items:center;justify-content:center}
+.badge{padding:5px 9px;border-radius:12px;background:#ffffff12;color:#d8efe4;font-size:12px}.activeTurn{border-color:var(--gold);box-shadow:0 0 20px #dcb94d33}
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;text-align:center}
+.piles{display:flex;justify-content:center;align-items:center;gap:20px}.pilebox{text-align:center;color:#d6eee5;font-size:12px}
+.cardback,.playingcard{width:68px;height:96px;border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 7px 15px #0007;user-select:none}
+.cardback{background:repeating-linear-gradient(45deg,#153fca 0 6px,#fff 6px 9px);border:3px solid #fff;font-size:27px}
+.playingcard{background:var(--cream);color:#161616;border:2px solid #ded6c5;font-size:24px;font-weight:900}
+.playingcard.red{color:#c9232b}.discard{cursor:pointer}
+.turn{display:inline-block;margin:14px auto;background:#06130fcc;border:1px solid #ffffff20;border-radius:20px;padding:8px 15px;color:#ffe18a}
+.handArea{position:absolute;left:8px;right:8px;bottom:85px;z-index:4}
+.hand{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;direction:ltr}
+.hand .playingcard{width:51px;height:73px;font-size:18px;cursor:pointer;transition:.15s}
+.hand .playingcard.selected{transform:translateY(-14px);border-color:#f8d65f;box-shadow:0 0 0 3px #f8d65f55,0 12px 20px #0008}
+.controls{position:absolute;bottom:22px;left:0;right:0;text-align:center;z-index:5}
+.message{color:#d9efe5;font-size:13px;margin:8px}
+.log{margin-top:10px;background:#0005;border-radius:14px;padding:10px;max-height:110px;overflow:auto;font-size:12px;color:#d3e6df}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}
+.modal .panel{width:min(100%,420px)}
+@media(max-width:600px){
+ .app{padding:7px}.panel{padding:12px}.board{min-height:610px;border-width:7px}
+ .cardback,.playingcard{width:58px;height:84px}.hand .playingcard{width:43px;height:64px;font-size:15px}
+ .player{left:10px;right:10px}.handArea{bottom:82px}
+}
 </style>
 </head>
 <body>
 <div class="app">
 
 <section id="home" class="screen active">
-<div class="card">
-<h1>🃏 کۆنکان آنلاین</h1>
-<p>یاریی کارتی ٥٢ کارت بۆ دوو یاریزان</p>
-<div class="top">
-<span class="coins">🪙 کۆین: <b id="homeCoins">1000</b></span>
-<span>🏆 خاڵ: <b id="homeScore">0</b></span>
-</div>
-<br>
-<button class="btn" onclick="show('create')">➕ دروستکردنی ژوور</button>
-<button class="btn secondary" onclick="show('join')">🚪 چوونە ناو ژوور</button>
-<hr style="border-color:#ffffff22">
-<p class="small">ئەم وەشانە بۆ تاقیکردنەوەی UI و لۆجیکی یارییە. بۆ Online ـی ڕاستەقینە پێویستی بە backend/Supabase هەیە.</p>
-</div>
+ <div class="panel">
+  <div class="logo">🃏</div>
+  <h1>کۆنکانی کوردی</h1>
+  <p class="sub">یاریی کارتی ٥٢ کارت — شێوازی مۆبایل و دوو یاریزان</p>
+  <div class="stats">
+   <div class="stat">🪙<b id="coins">2,500</b><small>کۆین</small></div>
+   <div class="stat">🏆<b id="wins">0</b><small>بردنەوە</small></div>
+   <div class="stat">⭐<b id="xp">0</b><small>XP</small></div>
+  </div>
+  <div class="home-actions">
+   <button class="btn" onclick="openCreate()">🎮 یاریی نوێ</button>
+   <button class="btn dark" onclick="openJoin()">🔑 چوونە ناو ژوور</button>
+  </div>
+  <p class="sub" style="font-size:12px;margin-top:18px">کۆینەکان لەم وەشانەدا نا-پارەیین و تەنها بۆ ناوخۆی یارییەکەن.</p>
+ </div>
 </section>
 
-<section id="create" class="screen">
-<div class="card">
-<h2>دروستکردنی ژوور</h2>
-<input id="creator" placeholder="ناوی یاریزان">
-<div class="row">
-<button class="btn" onclick="createRoom()">دروستکردن</button>
-<button class="btn secondary" onclick="show('home')">گەڕانەوە</button>
-</div>
-<div id="roomResult"></div>
-</div>
-</section>
-
-<section id="join" class="screen">
-<div class="card">
-<h2>چوونە ناو ژوور</h2>
-<input id="joinName" placeholder="ناوی یاریزان">
-<input id="roomCode" placeholder="کۆدی ژوور">
-<div class="row">
-<button class="btn" onclick="joinRoom()">چوونە ژوور</button>
-<button class="btn secondary" onclick="show('home')">گەڕانەوە</button>
-</div>
-<p id="joinMsg" class="small"></p>
-</div>
+<section id="lobby" class="screen">
+ <div class="panel">
+  <h2 id="lobbyTitle">🎮 ژووری یاری</h2>
+  <input id="name" placeholder="ناوی یاریزان">
+  <div id="codeWrap" style="display:none"><input id="code" placeholder="کۆدی ژوور"></div>
+  <button class="btn" id="lobbyBtn" onclick="lobbyAction()">دروستکردنی ژوور</button>
+  <button class="btn dark" onclick="show('home')">گەڕانەوە</button>
+  <div id="lobbyInfo"></div>
+ </div>
 </section>
 
 <section id="game" class="screen">
-<div class="card">
-<div class="top">
-<button class="btn secondary" onclick="show('home')">🏠</button>
-<span class="coins">🪙 <b id="gameCoins">1000</b></span>
-<span>ژوور: <b id="gameRoom">----</b></span>
-</div>
-<div class="players">
-<div class="player">👤 <b id="p1">یاریزان ١</b><br>خاڵ: <span id="s1">0</span></div>
-<div class="player">👤 <b id="p2">یاریزان ٢</b><br>خاڵ: <span id="s2">0</span></div>
-</div>
-<div class="table">
-<div class="turn" id="turn">نۆرەی یاریزان ١</div>
-<div class="pile">
-<div><div class="deck" onclick="drawCard()">🂠</div><div class="small">کارتەکان</div></div>
-<div><div class="discard" id="discard">-</div><div class="small">فڕێدراو</div></div>
-</div>
-<p id="message">کارتێک هەڵبژێرە یان کارتێک وەرگرە.</p>
-<div id="opponentHand" class="hand"></div>
-<hr style="border-color:#ffffff33">
-<div id="hand" class="hand"></div>
-<div style="text-align:center;margin-top:12px">
-<button class="btn gold" onclick="discardSelected()">فڕێدانی کارت</button>
-<button class="btn" onclick="newRound()">گەڕاندنەوەی یاری</button>
-</div>
-</div>
-<h3>📜 تۆمار</h3>
-<div id="log" class="log"></div>
-</div>
+ <div class="gamebar">
+  <button class="btn dark" onclick="show('home')">🏠</button>
+  <div class="coin">🪙 <span id="gameCoins">2,500</span></div>
+  <div>Room: <b id="room">------</b></div>
+ </div>
+ <div class="board">
+  <div id="opp" class="player top">
+   <div class="playerline"><span><span class="avatar">👤</span> <b id="oppName">یاریزانی ٢</b></span><span class="badge">🃏 ٧ کارت</span></div>
+  </div>
+  <div class="center">
+   <div class="turn" id="turn">نۆرەی تۆیە</div>
+   <div class="piles">
+    <div class="pilebox"><div class="cardback" onclick="draw()">🂠</div><div>کۆمەڵە کارت</div></div>
+    <div class="pilebox"><div id="discard" class="playingcard discard">-</div><div>کارتێکی فڕێدراو</div></div>
+   </div>
+   <div class="message" id="msg">کارتێک هەڵبژێرە، پاشان فڕێی بدە.</div>
+  </div>
+  <div class="handArea">
+   <div class="hand" id="hand"></div>
+  </div>
+  <div id="me" class="player bottom">
+   <div class="playerline"><span><span class="avatar">😎</span> <b id="myName">تۆ</b></span><span class="badge">🃏 <span id="count">٧</span> کارت</span></div>
+  </div>
+  <div class="controls">
+   <button class="btn" onclick="discardCard()">فڕێدان</button>
+   <button class="btn dark" onclick="newGame()">یاریی نوێ</button>
+  </div>
+ </div>
+ <div class="log" id="log"></div>
 </section>
-</div>
+
+<div class="modal" id="modal"><div class="panel"><h2>🏆 ئەنجام</h2><p id="result"></p><button class="btn" onclick="closeResult()">باشە</button></div></div>
 
 <script>
-const suits=[
- {s:'♠',r:false},{s:'♥',r:true},{s:'♦',r:true},{s:'♣',r:false}
-];
-const ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-let deck=[],hand=[],opponent=[],discard='',selected=-1,turn=1,score1=0,score2=0,room='';
-let coins=1000;
+let deck=[],hand=[],selected=-1,discardCardValue=null,turn=true,roomCode='';
+let coins=2500,wins=0,xp=0,creating=true;
 
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function makeDeck(){
- deck=[];
- suits.forEach(x=>ranks.forEach(r=>deck.push({r,s:x.s,red:x.r})));
- deck.sort(()=>Math.random()-.5);
+const suits=[['♠',false],['♥',true],['♦',true],['♣',false]];
+const ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function openCreate(){creating=true;document.getElementById('lobbyTitle').textContent='🎮 دروستکردنی ژوور';document.getElementById('codeWrap').style.display='none';document.getElementById('lobbyBtn').textContent='دروستکردنی ژوور';document.getElementById('lobbyInfo').innerHTML='';show('lobby')}
+function openJoin(){creating=false;document.getElementById('lobbyTitle').textContent='🔑 چوونە ناو ژوور';document.getElementById('codeWrap').style.display='block';document.getElementById('lobbyBtn').textContent='چوونە ژوور';document.getElementById('lobbyInfo').innerHTML='';show('lobby')}
+function lobbyAction(){
+ const n=document.getElementById('name').value.trim()||'یاریزان';
+ if(creating){
+  roomCode=Math.random().toString(36).slice(2,8).toUpperCase();
+  document.getElementById('lobbyInfo').innerHTML='<p style="text-align:center">کۆدی ژوور:</p><h1>'+roomCode+'</h1><p class="sub">ئەم کۆدە بۆ یاریزانی دووەم بنێرە.</p><button class="btn" onclick="startGame(\''+escapeJs(n)+'\',\'هاوڕێ\')">▶️ دەستپێکردن</button>';
+ }else{
+  roomCode=(document.getElementById('code').value.trim()||'LOCAL').toUpperCase();
+  startGame(n,'هاوڕێ');
+ }
 }
-function cardText(c){return c.r+c.s}
-function createRoom(){
- const name=document.getElementById('creator').value.trim()||'یاریزان ١';
- room=Math.random().toString(36).slice(2,8).toUpperCase();
- document.getElementById('roomResult').innerHTML='<p>ژوورەکەت دروستکرا:</p><h2>'+room+'</h2><p class="small">کۆدی ژوورەکە بۆ یاریزانی دووەم بنێرە.</p><button class="btn" onclick="startGame(\''+name+'\',\'یاریزان ٢\')">▶️ دەستپێکردنی تاقیکردنەوە</button>';
+function escapeJs(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function makeDeck(){deck=[];suits.forEach(x=>ranks.forEach(r=>deck.push({r:r,s:x[0],red:x[1]})));deck.sort(()=>Math.random()-.5)}
+function txt(c){return c.r+c.s}
+function startGame(me,op){
+ document.getElementById('myName').textContent=me;document.getElementById('oppName').textContent=op;document.getElementById('room').textContent=roomCode||'LOCAL';show('game');newGame()
 }
-function joinRoom(){
- const name=document.getElementById('joinName').value.trim()||'یاریزان ٢';
- const code=document.getElementById('roomCode').value.trim().toUpperCase();
- if(!code){document.getElementById('joinMsg').textContent='تکایە کۆدی ژوور بنووسە.';return}
- room=code; startGame('یاریزان ١',name);
-}
-function startGame(a,b){
- document.getElementById('p1').textContent=a;
- document.getElementById('p2').textContent=b;
- document.getElementById('gameRoom').textContent=room||'LOCAL';
- show('game'); newRound();
-}
-function newRound(){
- makeDeck(); hand=deck.splice(0,7); opponent=deck.splice(0,7); discard=cardText(deck.pop()); selected=-1; turn=1;
- log('یارییەکی نوێ دەستی پێکرد.');
- render();
+function newGame(){
+ makeDeck();hand=deck.splice(0,7);for(let i=0;i<7;i++)deck.pop();discardCardValue=deck.pop();selected=-1;turn=true;log('🎴 یاریی نوێ دەستی پێکرد.');render()
 }
 function render(){
- document.getElementById('gameCoins').textContent=coins;
- document.getElementById('homeCoins').textContent=coins;
- document.getElementById('s1').textContent=score1;
- document.getElementById('s2').textContent=score2;
- document.getElementById('discard').textContent=discard;
- document.getElementById('turn').textContent='نۆرەی '+(turn===1?document.getElementById('p1').textContent:document.getElementById('p2').textContent);
- document.getElementById('hand').innerHTML=hand.map((c,i)=>'<div class="cardx '+(c.red?'red':'')+(selected===i?' selected':'')+'" onclick="selectCard('+i+')">'+cardText(c)+'</div>').join('');
- document.getElementById('opponentHand').innerHTML=opponent.map(()=>'<div class="cardx">🂠</div>').join('');
+ document.getElementById('coins').textContent=coins.toLocaleString();document.getElementById('gameCoins').textContent=coins.toLocaleString();
+ document.getElementById('wins').textContent=wins;document.getElementById('xp').textContent=xp;
+ document.getElementById('count').textContent=hand.length;document.getElementById('discard').textContent=discardCardValue?txt(discardCardValue):'-';
+ document.getElementById('turn').textContent=turn?'نۆرەی تۆیە':'چاوەڕوانی نۆرە...';
+ document.getElementById('hand').innerHTML=hand.map((c,i)=>'<div class="playingcard '+(c.red?'red':'')+(selected===i?' selected':'')+'" onclick="select('+i+')">'+txt(c)+'</div>').join('');
 }
-function selectCard(i){
- if(turn!==1)return;
- selected=selected===i?-1:i;
- document.getElementById('message').textContent=selected<0?'کارتێک هەڵبژێرە.':'ئەم کارتە هەڵبژێردراوە: '+cardText(hand[selected]);
- render();
+function select(i){if(!turn)return;selected=selected===i?-1:i;document.getElementById('msg').textContent=selected<0?'کارتێک هەڵبژێرە.':'هەڵبژێردرا: '+txt(hand[selected]);render()}
+function draw(){
+ if(!turn){return}
+ if(deck.length===0){document.getElementById('msg').textContent='کارت نەماوە.';return}
+ hand.push(deck.pop());selected=-1;log('🂠 کارتێکت وەرگرت.');render();
 }
-function drawCard(){
- if(turn!==1){document.getElementById('message').textContent='ئێستا نۆرەی تۆ نییە.';return}
- if(!deck.length){document.getElementById('message').textContent='کارت نەماوە.';return}
- hand.push(deck.pop());
- log('یاریزانی ١ کارتێکی نوێی وەرگرت.');
- turn=2; selected=-1; render();
- setTimeout(aiTurn,700);
+function discardCard(){
+ if(!turn||selected<0){document.getElementById('msg').textContent='یەکێک لە کارتەکان هەڵبژێرە.';return}
+ discardCardValue=hand.splice(selected,1)[0];selected=-1;log('🃏 کارتێکت فڕێدا: '+txt(discardCardValue));turn=false;render();
+ setTimeout(fakeOpponent,800)
 }
-function discardSelected(){
- if(turn!==1||selected<0)return;
- discard=cardText(hand.splice(selected,1)[0]);
- log('یاریزانی ١ کارتێکی فڕێدا: '+discard);
- selected=-1; turn=2; render();
- setTimeout(aiTurn,700);
+function fakeOpponent(){
+ if(deck.length)deck.pop();
+ turn=true;log('👤 نۆرەی هاوڕێکەت تەواو بوو.');render();
+ if(hand.length===0){wins++;xp+=100;coins+=100;document.getElementById('result').textContent='🎉 تۆ بردتەوە! +100 کۆین و +100 XP';document.getElementById('modal').classList.add('show');render()}
 }
-function aiTurn(){
- if(turn!==2)return;
- if(deck.length)opponent.push(deck.pop());
- if(opponent.length){
-  const c=opponent.pop(); discard=cardText(c); log('یاریزانی ٢ نۆرەکەی تەواو کرد.');
- }
- turn=1; render();
- checkEnd();
-}
-function checkEnd(){
- if(hand.length===0){
-  score1+=100; coins+=50; log('🎉 یاریزانی ١ بردیەوە و ٥٠ کۆینی خۆڕایی وەرگرت.');
-  document.getElementById('homeScore').textContent=score1; render();
- }else if(opponent.length===0){
-  score2+=100; log('یاریزانی ٢ بردیەوە.');
-  render();
- }
-}
-function log(t){
- const el=document.getElementById('log');
- el.innerHTML='<div>'+new Date().toLocaleTimeString()+' — '+t+'</div>'+el.innerHTML;
-}
+function closeResult(){document.getElementById('modal').classList.remove('show');newGame()}
+function log(t){let e=document.getElementById('log');e.innerHTML='<div>'+new Date().toLocaleTimeString()+' — '+t+'</div>'+e.innerHTML}
 </script>
 </body>
 </html>
