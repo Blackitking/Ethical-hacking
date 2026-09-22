@@ -2,257 +2,296 @@
 <html lang="ku" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>کۆنکانی کوردی — Lobby</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KURD PASS</title>
+
 <style>
-*{box-sizing:border-box}
-:root{
- --glass:rgba(35,39,54,.66);
- --glass2:rgba(55,55,72,.72);
- --gold:#e7b94d;
- --gold2:#ffd86c;
- --purple:#6652c5;
- --pink:#a72e5d;
- --cyan:#087e9a;
- --orange:#9b5a2e;
- --text:#fff;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Tahoma,sans-serif;
 }
-html,body{margin:0;width:100%;height:100%;overflow:hidden}
+
 body{
- font-family:Tahoma,Arial,sans-serif;color:var(--text);
- background:
- radial-gradient(circle at 50% 20%,rgba(255,255,255,.2),transparent 32%),
- linear-gradient(180deg,rgba(19,39,62,.3),rgba(4,12,22,.72)),
- url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=85")
- center/cover fixed no-repeat;
+    min-height:100vh;
+    background:linear-gradient(135deg,#07111f,#123b68);
+    color:#fff;
 }
-button{font-family:inherit}
-.app{height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#0003 0%,transparent 30%,#0004 100%)}
+
+.hidden{
+    display:none!important;
+}
+
+.container{
+    width:100%;
+    max-width:450px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    border-radius:24px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.logo{
+    width:85px;
+    height:85px;
+    margin:20px auto;
+    border-radius:25px;
+    background:#fff;
+    color:#0b4f8a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#dbeafe;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin:12px 0 7px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:#fff;
+    color:#111;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    border:0;
+    padding:15px;
+    border-radius:15px;
+    margin-top:18px;
+    background:#1683e8;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.secondary{
+    background:rgba(255,255,255,.12);
+}
+
 .header{
- height:88px;display:flex;align-items:center;justify-content:space-between;
- padding:8px 28px;background:rgba(70,75,85,.56);
- border-bottom:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
 }
-.profile{display:flex;align-items:center;gap:12px}
+
+.header-title{
+    font-size:23px;
+    font-weight:bold;
+}
+
+.logout{
+    width:auto;
+    margin:0;
+    padding:9px 14px;
+    font-size:14px;
+    background:#dc3545;
+}
+
+.profile{
+    text-align:center;
+    padding:25px 10px;
+}
+
 .avatar{
- width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);
- background:linear-gradient(145deg,#222,#80633b);display:grid;place-items:center;font-size:27px;
- box-shadow:0 3px 12px #0008
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    margin:auto;
+    background:#1683e8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    border:4px solid rgba(255,255,255,.5);
 }
-.username{font-size:18px;font-weight:800}
-.level{font-size:12px;color:#ddd;margin-top:3px}
-.currency{display:flex;align-items:center;gap:14px;direction:ltr}
-.currency .item{display:flex;align-items:center;gap:5px;font-weight:800;font-size:15px}
-.coinIcon{color:#e8bc3e;font-size:23px}.gemIcon{color:#49d9ff;font-size:22px}
-.add{
- width:38px;height:38px;border-radius:50%;border:1px solid #fff8;background:#ffffff18;color:#fff;font-size:25px;cursor:pointer
+
+.profile h2{
+    margin-top:12px;
 }
-.headerCenter{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px}
-.trophy{font-size:35px}.headerBtn{
- min-width:145px;padding:13px 28px;border-radius:18px;border:1px solid #e6bd4c88;
- background:linear-gradient(180deg,#ffffff1c,#ffffff09);color:#fff;font-weight:800;font-size:17px
-}
-.main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:18px 28px}
-.lobby{width:100%;max-width:1450px}
-.sectionTitle{text-align:center;font-size:20px;font-weight:900;text-shadow:0 2px 8px #000}
+
 .cards{
- display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:22px;
- direction:rtl
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:20px;
 }
-.gameCard{
- min-height:410px;border-radius:29px;border:1px solid #ffffff45;overflow:hidden;
- background:linear-gradient(180deg,var(--c1),var(--c2));
- box-shadow:0 12px 28px #0009,inset 0 1px #ffffff38;
- display:flex;flex-direction:column;justify-content:space-between;padding:22px 17px 17px;
- position:relative;transition:.18s;cursor:pointer
+
+.menu-card{
+    padding:20px 12px;
+    border-radius:20px;
+    background:rgba(255,255,255,.10);
+    text-align:center;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.12);
 }
-.gameCard:hover{transform:translateY(-6px);filter:brightness(1.08)}
-.gameCard:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 22%,#fff2,transparent 30%);pointer-events:none}
-.lock{font-size:70px;text-align:center;margin-top:30px;filter:drop-shadow(0 10px 10px #0005)}
-.art{height:160px;display:grid;place-items:center;font-size:86px;filter:drop-shadow(0 13px 12px #0007);position:relative;z-index:1}
-.title{text-align:center;font-size:20px;font-weight:900;position:relative;z-index:1}
-.desc{text-align:center;color:#eee;line-height:1.7;font-size:12px;min-height:44px;position:relative;z-index:1}
-.play{
- width:100%;padding:13px;border-radius:17px;border:1px solid #ffffff35;
- color:#fff;font-size:17px;font-weight:900;background:#ffffff18;
- box-shadow:inset 0 1px #ffffff25;position:relative;z-index:1;cursor:pointer
+
+.menu-card .icon{
+    font-size:35px;
+    margin-bottom:10px;
 }
-.play.gold{background:linear-gradient(180deg,#d5a42f,#9c6d18)}
-.play.purple{background:linear-gradient(180deg,#806bdc,#5541a8)}
-.play.pink{background:linear-gradient(180deg,#d03b70,#8d1747)}
-.play.cyan{background:linear-gradient(180deg,#18a4bf,#08718a)}
-.play.orange{background:linear-gradient(180deg,#c7793a,#81431f)}
-.bottom{
- height:100px;display:flex;align-items:center;justify-content:center;gap:20px;padding:10px 24px
+
+.menu-card span{
+    display:block;
+    font-weight:bold;
 }
-.nav{
- height:76px;min-width:540px;border-radius:28px;background:rgba(70,70,72,.67);
- border:1px solid #ffffff28;backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;gap:35px;
- box-shadow:0 10px 35px #0007
+
+.digital-card{
+    background:linear-gradient(135deg,#0d6efd,#123d7a);
+    border-radius:25px;
+    padding:22px;
+    margin-top:15px;
+    box-shadow:0 15px 30px rgba(0,0,0,.25);
 }
-.navItem{min-width:105px;text-align:center;cursor:pointer;color:#fff}
-.navIcon{font-size:35px;display:block}.navText{font-size:11px;margin-top:2px}
-.pro{
- background:linear-gradient(180deg,#ffc928,#c78500);color:#3c2600;border-radius:15px;padding:10px 18px;font-size:22px;font-weight:1000;box-shadow:0 4px 0 #805400
+
+.digital-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
-.floating{
- position:fixed;left:24px;bottom:22px;display:flex;gap:10px
+
+.digital-logo{
+    font-size:35px;
 }
-.circle{
- width:58px;height:58px;border-radius:50%;background:#55564eaa;border:1px solid #fff4;
- display:grid;place-items:center;font-size:27px;backdrop-filter:blur(7px);cursor:pointer
+
+.digital-card h2{
+    margin:15px 0;
 }
-.modal{position:fixed;inset:0;background:#0009;display:none;place-items:center;padding:20px;z-index:10}
-.modal.show{display:grid}
-.modalBox{width:min(430px,100%);background:linear-gradient(145deg,#18252b,#0b1418);border:1px solid #ffffff22;border-radius:24px;padding:22px;box-shadow:0 20px 70px #000}
-.modalBox h2{text-align:center}.modalBox input{width:100%;padding:14px;border-radius:13px;background:#ffffff0d;border:1px solid #ffffff25;color:#fff;outline:0;margin:7px 0;font-family:inherit}
-.modalBox button{border:0;border-radius:13px;padding:13px 18px;margin-top:7px;cursor:pointer;font-weight:800}
-.primary{background:#d3a33b;color:#201600}.secondary{background:#35423e;color:#fff}
-.notice{text-align:center;color:#cbd9d5;font-size:12px;line-height:1.7}
-@media(max-width:1000px){
- .cards{grid-template-columns:repeat(3,minmax(160px,1fr));overflow:auto;max-height:calc(100vh - 190px);padding:10px}
- .gameCard{min-height:360px}
- .headerCenter{display:none}.nav{min-width:420px}
+
+.info{
+    background:rgba(255,255,255,.10);
+    padding:12px;
+    border-radius:13px;
+    margin-top:8px;
 }
-@media(max-width:650px){
- body{background-position:center}
- .header{height:72px;padding:6px 12px}.avatar{width:43px;height:43px}.username{font-size:14px}.currency{gap:7px}.currency .item{font-size:12px}
- .main{padding:8px}.cards{grid-template-columns:repeat(2,minmax(145px,1fr));gap:10px;max-height:calc(100vh - 155px)}
- .gameCard{min-height:290px;border-radius:21px;padding:12px}.art{height:105px;font-size:60px}.lock{font-size:55px;margin-top:10px}.title{font-size:15px}.desc{font-size:10px;min-height:38px}.play{padding:10px;font-size:13px;border-radius:13px}
- .bottom{height:76px;padding:5px}.nav{height:62px;min-width:0;width:100%;gap:5px;border-radius:20px}.navItem{min-width:65px}.navIcon{font-size:24px}.navText{font-size:9px}.pro{font-size:16px;padding:8px 11px}
- .floating{left:7px;bottom:8px}.circle{width:45px;height:45px;font-size:21px}
+
+.info small{
+    color:#dbeafe;
+}
+
+.info strong{
+    display:block;
+    margin-top:4px;
+}
+
+.qr{
+    width:130px;
+    height:130px;
+    background:white;
+    margin:20px auto 5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    font-weight:bold;
+    font-size:13px;
+    text-align:center;
+}
+
+.back{
+    background:rgba(255,255,255,.12);
+}
+
+.notice{
+    background:rgba(255,193,7,.15);
+    border:1px solid rgba(255,193,7,.35);
+    color:#ffe8a1;
+    padding:12px;
+    border-radius:14px;
+    margin-top:18px;
+    font-size:13px;
+    line-height:1.7;
+}
+
+footer{
+    text-align:center;
+    color:#b9cbe0;
+    font-size:12px;
+    margin:25px 0 10px;
 }
 </style>
 </head>
+
 <body>
-<div class="app">
 
-<header class="header">
- <div class="profile">
-  <div class="avatar">😎</div>
-  <div><div class="username">Konkani Player</div><div class="level">Level 12 • ئامادەی یاری</div></div>
- </div>
+<div class="container">
 
- <div class="headerCenter">
-  <span class="trophy">🏆</span>
-  <button class="headerBtn" onclick="openModal('leader')">ڕیزبەندی 🎮</button>
- </div>
+<!-- LOGIN -->
+<section id="loginScreen">
 
- <div class="currency">
-  <button class="add" onclick="openModal('coins')">＋</button>
-  <div class="item"><span class="coinIcon">🪙</span><span id="coins">78,000</span></div>
-  <div class="item"><span class="gemIcon">💎</span><span id="gems">125</span></div>
- </div>
-</header>
+    <div class="logo">🪪</div>
 
-<main class="main">
- <div class="lobby">
-  <div class="sectionTitle">🎴 هۆڵی یارییەکان</div>
-  <div class="cards">
+    <div class="card">
 
-   <div class="gameCard" style="--c1:#6251bd;--c2:#30275f">
-    <div class="lock">🔒</div>
-    <div>
-     <div class="title">ژووری تایبەت</div>
-     <div class="desc">لەگەڵ هاوڕێکانت ژوورێک دروست بکە و یەکتری بانگهێشت بکەن.</div>
-     <button class="play purple" onclick="openModal('private')">یاریکردن</button>
+        <h1>KURD PASS</h1>
+
+        <p class="subtitle">
+            ناسنامەی دیجیتاڵی تایبەتی
+        </p>
+
+        <label>ناوی بەکارهێنەر</label>
+        <input id="loginName" type="text" placeholder="ناوت بنووسە">
+
+        <label>وشەی نهێنی</label>
+        <input id="loginPassword" type="password" placeholder="وشەی نهێنی">
+
+        <button onclick="login()">
+            چوونەژوورەوە
+        </button>
+
+        <button class="secondary" onclick="demoLogin()">
+            چوونەژوورەوەی تاقیکردنەوە
+        </button>
+
+        <div class="notice">
+            ئەم سیستەمە نموونەییە و ناسنامە یان بەڵگەنامەی فەرمی حکومەت نییە.
+        </div>
+
     </div>
-   </div>
 
-   <div class="gameCard" style="--c1:#b62f60;--c2:#641a3b">
-    <div class="art">🀄</div>
-    <div>
-     <div class="title">هەرە هەڵ</div>
-     <div class="desc">یارییەکی خێرا بۆ دوو یاریزان، خۆت تاقی بکەرەوە.</div>
-     <button class="play pink" onclick="startDemo('هەرە هەڵ')">یاریکردن</button>
-    </div>
-   </div>
+    <footer>
+        KURD PASS © 2026
+    </footer>
 
-   <div class="gameCard" style="--c1:#a7663a;--c2:#63351e">
-    <div class="art">🃏</div>
-    <div>
-     <div class="title">کۆنکانی کوردی</div>
-     <div class="desc">٥٢ کارت، دوو یاریزان و شێوازی نوێی لۆبی و یاری.</div>
-     <button class="play orange" onclick="openModal('konkani')">یاریکردن</button>
-    </div>
-   </div>
+</section>
 
-   <div class="gameCard" style="--c1:#5c4bbb;--c2:#30256e">
-    <div class="art">🏙️</div>
-    <div>
-     <div class="title">سلێمانی کلاسیک</div>
-     <div class="desc">یارییەکی کلاسیکی خێرا بۆ کاتێکی خۆش لەگەڵ هاوڕێکان.</div>
-     <button class="play purple" onclick="startDemo('سلێمانی کلاسیک')">یاریکردن</button>
-    </div>
-   </div>
 
-   <div class="gameCard" style="--c1:#198da5;--c2:#075469">
-    <div class="art">🂠</div>
-    <div>
-     <div class="title">روم</div>
-     <div class="desc">ژوورێک هەڵبژێرە و بە کۆدی تایبەت یاریزانێکی تر بانگهێشت بکە.</div>
-     <button class="play cyan" onclick="openModal('room')">شیوازەکان</button>
-    </div>
-   </div>
+<!-- DASHBOARD -->
+<section id="dashboardScreen" class="hidden">
 
-  </div>
- </div>
-</main>
+    <div class="header">
 
-<footer class="bottom">
- <div class="nav">
-  <div class="navItem" onclick="openModal('tasks')"><span class="navIcon">🎯</span><span class="navText">ئامانجەکان</span></div>
-  <div class="navItem" onclick="openModal('spin')"><span class="navIcon">🎡</span><span class="navText">Spin</span></div>
-  <div class="navItem" onclick="openModal('pro')"><span class="pro">PRO</span></div>
-  <div class="navItem" onclick="openModal('friends')"><span class="navIcon">👥</span><span class="navText">هاوڕێیان</span></div>
- </div>
-</footer>
-
-<div class="floating">
- <div class="circle" onclick="openModal('settings')">⚙️</div>
- <div class="circle" onclick="openModal('help')">💡</div>
- <div class="circle" onclick="openModal('radio')">📻</div>
-</div>
-
-<div class="modal" id="modal">
- <div class="modalBox">
-  <h2 id="modalTitle">کۆنکانی</h2>
-  <div id="modalContent"></div>
-  <button class="secondary" onclick="closeModal()">داخستن</button>
- </div>
-</div>
-
-<script>
-function openModal(type){
- const m=document.getElementById('modal'),t=document.getElementById('modalTitle'),c=document.getElementById('modalContent');
- const data={
-  leader:['🏆 ڕیزبەندی','<p class="notice">لە وەشانی Online ـی داهاتوودا ڕیزبەندی یاریزانەکان بە شێوەی ڕاستەقینە نوێ دەکرێتەوە.</p>'],
-  coins:['🪙 کۆین','<p class="notice">کۆینەکان لەم وەشانەدا کۆینی نا-پارەیین و بۆ خاڵ و پاداشت بەکاردێن.</p>'],
-  private:['🔒 ژووری تایبەت','<input id="playerName" placeholder="ناوی یاریزان"><input id="roomCode" placeholder="کۆدی ژوور (ئەگەر هەیە)"><button class="primary" onclick="createRoom()">دروستکردن / چوونە ژوور</button>'],
-  konkani:['🃏 کۆنکانی کوردی','<p class="notice">٥٢ کارت • دوو یاریزان • نۆرە بە نۆرە</p><input id="playerName" placeholder="ناوی یاریزان"><button class="primary" onclick="startGame()">دەستپێکردنی یاری</button>'],
-  room:['🚪 روم','<p class="notice">Room ـی تایبەت دروست بکە یان بە کۆدێک بچۆ ناو یاری.</p><input id="roomCode" placeholder="کۆدی ژوور"><button class="primary" onclick="joinRoom()">چوونە ژوور</button>'],
-  tasks:['🎯 ئامانجەکان','<p class="notice">ئامانجی ڕۆژانە: ٣ یاری بکە • ١ یاری بەرەوپێش ببە • ٥٠ XP وەربگرە.</p>'],
-  spin:['🎡 Spin','<p class="notice">Spin ـی پاداشت بۆ وەشانی داهاتوو زیاد دەکرێت.</p>'],
-  pro:['⭐ PRO','<p class="notice">پەڕەی PRO بۆ تایبەتمەندییە زیادەکان لە وەشانی داهاتوودا.</p>'],
-  friends:['👥 هاوڕێیان','<p class="notice">لیستی هاوڕێیان و بانگهێشتکردنیان بۆ یاری لە وەشانی Online ـی داهاتوو.</p>'],
-  settings:['⚙️ ڕێکخستن','<p class="notice">لە وەشانی داهاتوودا دەنگ، زمان و ئاگادارکردنەوەکان لێرە ڕێکدەخرێن.</p>'],
-  help:['💡 یارمەتی','<p class="notice">کارتێک هەڵبژێرە، نۆرەکەت جێبەجێ بکە و بە شێوازی کۆنکانی یاری بکە.</p>'],
-  radio:['📻 رادیۆ','<p class="notice">بەشی دەنگ و موزیک بۆ لۆبی دەتوانرێت دواتر زیاد بکرێت.</p>']
- };
- t.textContent=data[type][0];c.innerHTML=data[type][1];m.classList.add('show');
-}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-function createRoom(){
- const code=Math.random().toString(36).slice(2,8).toUpperCase();
- document.getElementById('modalContent').innerHTML='<h2 style="color:#ffd86c;text-align:center">'+code+'</h2><p class="notice">کۆدی ژوورەکە بۆ هاوڕێکەت بنێرە.</p><button class="primary" onclick="startGame()">دەستپێکردن</button>';
-}
-function joinRoom(){startGame()}
-function startGame(){
- closeModal();
- alert('لۆبی کۆنکانی ئامادەیە. Online ـی ڕاستەقینە لە قۆناغی Supabase ـدا پەیوەست دەکرێت.');
-}
-function startDemo(name){openModal('konkani')}
-</script>
-</div>
-</body>
-</html>
+        <div class="
